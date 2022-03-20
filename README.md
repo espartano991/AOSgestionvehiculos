@@ -1,6 +1,6 @@
 # AOSgestionvehiculos
 
-- Atributos finales:
+> Atributos finales:
 - vin (string)
 - matricula (string)
 - marca (string)
