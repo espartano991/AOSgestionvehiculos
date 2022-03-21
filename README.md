@@ -20,29 +20,29 @@
 coche  
   GET  
   POST  
-    body: {  
-	  Matrícula  
-	  Marca  
-	  Modelo: (string)  
-	  Motor: (Text)  
-	    {  
-		  cilindrada, (int)  
-		  CV, (int)  
-		  tipo de motor (enum)  
-		    [  
-			  diesel,  
-			  gasolina,  
-			  híbrido,  
-			  eléctrico  
-			]  
-	    }  
-      Año: (Date ? Date : int)  
-	  Reparación: (Text)  
-	    {  
-		  fecha_reparacion (Date ? Date : int)  
-		  ¿Más cosas? ¿Nos salimos del scope?  
-		}  
-	}  
+  &nbsp;&nbsp;  body: {  
+  &nbsp;&nbsp;&nbsp;&nbsp;	  Matrícula  
+  &nbsp;&nbsp;&nbsp;&nbsp;	  Marca  
+  &nbsp;&nbsp;&nbsp;&nbsp;	  Modelo: (string)  
+  &nbsp;&nbsp;&nbsp;&nbsp;	  Motor: (Text)  
+  &nbsp;&nbsp;	    {  
+  &nbsp;&nbsp;	    cilindrada, (int)  
+  &nbsp;&nbsp;	    CV, (int)  
+  &nbsp;&nbsp;      tipo de motor (enum)  
+&nbsp;&nbsp;&nbsp;&nbsp;  [  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  diesel,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  gasolina,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  híbrido,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  eléctrico  
+&nbsp;&nbsp;&nbsp;&nbsp;  ]  
+  &nbsp;&nbsp;      }  
+&nbsp;&nbsp;  Año: (Date ? Date : int)  
+&nbsp;&nbsp;  Reparación: (Text)  
+&nbsp;&nbsp;&nbsp;&nbsp;  {  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  fecha_reparacion (Date ? Date : int)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ¿Más cosas? ¿Nos salimos del scope?  
+&nbsp;&nbsp;&nbsp;&nbsp;  }  
+&nbsp;&nbsp;  }  
   PUT  
 
 coche/{vin} (string)  
