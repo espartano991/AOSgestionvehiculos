@@ -17,7 +17,7 @@
 
 ## Mockup:
 
-coche  
+coche/  
   GET  
   POST  
   &nbsp;&nbsp;  body: {  
@@ -45,18 +45,18 @@ coche
 &nbsp;&nbsp;  }  
   PUT  
 
-coche/{vin} (string)  
+coche/{vin}/ (string)  
   GET  
   PUT  
   DELETE  
   
-coche/{matricula} (string)  
+coche/{matricula}/ (string)  
   GET  
   PUT  
   DELETE  
   
-coche/{marca} (string)  
+coche/{marca}/ (string)  
   GET  
   
-coche/{año} (int)  
+coche/{año}/ (int)  
   GET  
