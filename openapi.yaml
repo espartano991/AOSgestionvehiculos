@@ -65,6 +65,18 @@ components:
           enum:
             - Reparar
             - Revisar
+            - Reparar y Revisar
+      example:
+        vehiculo:
+          VIN: MNCLSFE405W491230
+          matricula: XEC4567YX
+          marca: Ford
+          modelo: Mustang
+          año: 1987
+          motor: V8, 500 CV, gasolina
+          clienteID: qwer1234
+          reparacionUltima: 2021
+          proposito: Reparar y Revisar
             
             
         
