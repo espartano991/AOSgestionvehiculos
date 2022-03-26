@@ -1,0 +1,86 @@
+openapi: 3.0.2
+
+info: 
+  title: 'Practica AOS gestión de vehículos subsistema_2'
+  description: 'Práctica realizada por el grupo 4 realizando el subservicio de gestión de coches en el taller'
+  version: '1.0'
+  
+  
+tags:
+  - name: 'vehículo'
+    description: 'vehículo a gestionar'
+    
+    
+paths:
+  /vehiculo:
+  
+components: 
+  schemas:
+  
+    vehiculo:
+      description: 'objeto vehiculo a gestionar'
+      title: 'vehiculo'
+      type: object
+      
+      required:
+      - VIN
+      - matricula
+      - marca
+      - modelo
+      - motor
+      - clienteID
+      - proposito
+      
+      properties:
+        VIN:
+          description: Identificador único de cada vehículo
+          type: string
+        matricula:
+          description: Matrícula del vehículo
+          type: string
+        marca:
+          description: Marca del vehículo (mercedes, porche, etc.)
+          type : string
+        modelo:
+          description: Modelo de vehículo
+          type: string
+        año:
+          description: Año de fabricación del vehiculo
+          type: integer
+          format: int32
+        motor:
+          description: Cilindrada del motor, CV del motor, tipo de motor.
+          type: string
+        clienteID:
+          description: Identificador único del cliente propietario del vehículo
+          type: string
+        reparacionUltima:
+          description: Año de la última reparación del vehículo
+          type: integer
+          nullable: true
+          format: int32
+        proposito:
+          description: Propósito de la visita. Para reparar o revisar.
+          type: string
+          enum:
+            - Reparar
+            - Revisar
+            
+            
+        
+          
+          
+        
+        
+        
+          
+      
+    
+    
+    
+  
+  
+  
+  
+
+  
