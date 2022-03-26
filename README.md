@@ -8,6 +8,7 @@
 - motor (cilindrada, CV, tipo de motor) (Text)
 - año (int)
 - reparación (fecha ultima reparación) (Text) 
+- clienteID (string)
 > Atributos obligatorios para post:
 - VIN
 - Matrícula
