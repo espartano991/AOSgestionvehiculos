@@ -9,6 +9,7 @@
 - año (int)
 - reparación (fecha ultima reparación) (Text) 
 > Atributos obligatorios para post:
+- VIN
 - Matrícula
 - Marca
 - Modelo
