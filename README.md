@@ -9,13 +9,15 @@
 - año (int)
 - reparación (fecha ultima reparación) (Text) 
 - clienteID (string)
+- propósito (reparar o revisar) (enum)
 > Atributos obligatorios para post:
 - VIN
 - Matrícula
 - Marca
 - Modelo
 - Motor
-- Año
+- clienteID
+- propósito
 
 ## Mockup:
 
