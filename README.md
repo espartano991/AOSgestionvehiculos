@@ -18,7 +18,15 @@
 - Motor
 - clienteID
 - propósito
-
+> Respuestas_HTTP:
+- 200 OK
+- 201 Created
+- 400 Bad Request
+- 403 Forbidden
+- 401 unauthorized
+- 404 Not Found
+- 408 Request Timeout
+- 500 Internal Server Error
 ## Mockup:
 
 coche/  
