@@ -80,7 +80,7 @@ FALTA DEFINERLES SCHEMAS & EXAMPLES
 Response_200:
       description: '`OK`: el objeto ha sido modificado'
       content:
-        application/problem+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/ '
           examples:
