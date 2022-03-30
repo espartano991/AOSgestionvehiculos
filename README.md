@@ -97,11 +97,11 @@ Response_201:
               schema:
                 $ref: '#/components/schemas/ '
               examples:
-                NOMBREExample:
-                  $ref: '#/components/examples/NOMBRE-example'  
+                response-http-200:
+                 $ref: '#/components/examples/response-http-200
                   
  Response_400:
-      description:  Bad request
+      description: Bad request
       content:
         application/problem+json:
           schema:
@@ -118,7 +118,7 @@ Response_403:
             $ref: '#/components/schemas/ ‘
           examples:
             response-http-403:
-              $ref: '#/components/examples/response-http-403’
+              $ref: '#/components/examples/response-http-403'
               
 Response_401:
       description: Unauthorized
@@ -128,7 +128,7 @@ Response_401:
             $ref: '#/components/schemas/ ‘
           examples:
             response-http-401:
-              $ref: '#/components/examples/response-http-401
+              $ref: '#/components/examples/response-http-401'
               
 Response_404:
       description: '`NOT FOUND`: recurso no disponible'
@@ -141,14 +141,14 @@ Response_404:
               $ref: '#/components/examples/response-http-404'
 
  Response_408:
-      description: 'Request Timeout'
+      description: Request Timeout
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ '
           examples:
             response-http-408:
-              $ref: '#/components/examples/response-http-408’
+              $ref: '#/components/examples/response-http-408'
               
  Response_500:
       description: Internal Server Error
