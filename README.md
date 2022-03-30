@@ -88,7 +88,7 @@ Response_200:
               $ref: '#/components/examples/response-http-200
               
 Response_201:
-      description: Nuevo NOMBRE creado
+      description: Nuevo objeto creado
           headers:
             Location:
               $ref: '#/components/headers/Location'
