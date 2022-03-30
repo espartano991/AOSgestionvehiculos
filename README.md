@@ -155,7 +155,7 @@ Response_404:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/HTTP_Problem'
+            $ref: '#/components/schemas/ '
           examples:
             response-http-422:
               $ref: '#/components/examples/response-http-422'
