@@ -16,7 +16,6 @@ paths:
   
 components: 
   schemas:
-  
     vehiculo:
       description: 'objeto vehiculo a gestionar'
       title: 'vehiculo'
@@ -105,23 +104,162 @@ components:
           description: "A URI reference that identifies the specific
                     occurrence of the problem.  It may or may not yield further
                     information if dereferenced"
-  responses: 
+  
+  responses:
+    Response_200:
+      description: '`OK`: el objeto ha sido modificado'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/'
+          examples:
+            response-http-200:
+              $ref: '#/components/examples/response-http-200'
 
+    Response_201:
+      description: 'El recurso ha sido creado'
+      Location: 
+        $ref: '#/components/schemas/'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/'
+          examples:
+            response-http-201:
+              $ref: '#/components/examples/response-http-201'  
+  
+    Response_400:
+      description: '`Bad Request`: el recurso no se encuentra disponible'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-400:
+              $ref: '#/components/examples/response-http-400'
+
+    Response_401:
+      description: '`UNAUTHORIZED`: no dispone de las credenciales válidas'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-401:
+              $ref: '#/components/examples/response-http-401'
+           
+    Response_403:
+      description: '`FORBIDDEN`: la petición no ha sido autorizada'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-403:
+              $ref: '#/components/examples/response-http-403'
+              
+    Response_404:
+      description: '`NOT FOUND`: el recurso no se encuentra disponible'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-404:
+              $ref: '#/components/examples/response-http-404'
+
+    Response_408:
+      description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-408:
+              $ref: '#/components/examples/response-http-408'      
+
+    Response_500:
+      description: 'Internal server error'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-500:
+              $ref: '#/components/examples/response-http-500'  
+
+  examples:
+    response-http-200:
+      value:
+        type: https://httpstatuses.com/200
+        title: OK
+        status: 200
+        detail: 'La petición realizada ha sido un éxito'
+        instance: about:blank
+        
+    response-http-201:
+      value:
+        type: https://httpstatuses.com/200
+        title: Resource Created
+        status: 201
+        detail: 'El recurso ha sido creado'
+        instance: about:blank        
+  
+    response-http-400:
+      value:
+        type: https://httpstatuses.com/400
+        title: Bad Request
+        status: 400
+        detail: 'La petición realizada es incorrecta'
+        instance: about:blank
+
+    response-http-401:
+      value:
+        type: https://httpstatuses.com/401
+        title: UNAUTHORIZED
+        status: 401
+        detail: 'Las credenciales no son correctas'
+        instance: about:blank
+
+    response-http-403:
+      value:
+        type: https://httpstatuses.com/403
+        title: FORBIDDEN
+        status: 403
+        detail: 'La petición es correcta pero no se autoriza'
+        instance: about:blank
+        
+    response-http-404:
+      value:
+        type: https://httpstatuses.com/404
+        title: NOT FOUND
+        status: 404
+        detail: 'El recurso con el vehículo solicitado no se encuentra disponible'
+        instance: about:blank
+
+    response-http-408:
+      value:
+        type: https://httpstatuses.com/408
+        title: REQUEST_TIMEOUT
+        status: 408
+        detail: 'Se ha perdido la conexión con el servidor'
+        instance: about:blank
+
+    response-http-500:
+      value:
+        type: https://httpstatuses.com/500
+        title: INTERNAL SERVER ERROR
+        status: 500
+        detail: 'Error en el servidor'
+        instance: about:blank
+    
+        
+        
+        
+        
+        
+        
+           
             
-        
-          
-          
-        
-        
-        
-          
-      
-    
-    
-    
   
-  
-  
-  
-
   
