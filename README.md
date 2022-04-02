@@ -27,6 +27,7 @@
 - 404 Not Found
 - 408 Request Timeout
 - 500 Internal Server Error
+- 412 Precondition failed (el ETag no es el mismo)
 ## Mockup:
 
 coche/  
