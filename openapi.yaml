@@ -5,37 +5,29 @@ info:
   description: >-
     Práctica realizada por el grupo 4 realizando el subservicio de gestión de
     coches en el taller
-  x-logo:
-    url: ''
+
 servers:
   - url: https://api.example.io
 paths:
   /vehiculo:
-    summary: ''
-    description: Obtenemos el listado de todos los vehículos en el sistema.
+    summary: 'Obtenemos el listado de todos los vehículos en el sistema.'
     get:
       tags:
-        - vehículo
+        - vehiculo
       parameters:
         - $ref: '#/components/parameters/OrdenacionVehiculo'
-          name: OrdenacionVehiculo
-          x-last-modified: 1648887031619
         - $ref: '#/components/parameters/direccionOrden'
-          name: direccionOrden
-          x-last-modified: 1648887049780
+        
       responses:
         '200':
           $ref: '#/components/responses/Response_200'
-          x-last-modified: 1648885705281
         '400':
           $ref: '#/components/responses/Response_400'
-          x-last-modified: 1648885875729
         '404':
           $ref: '#/components/responses/Response_404'
-          x-last-modified: 1648885841723
-        '500':
-          $ref: '#/components/responses/Response_500'
-          x-last-modified: 1648888952394
+        '502':
+          $ref: '#/components/responses/Response_502'
+
       operationId: vehiculos_get
       summary: Obtenemos el listado de todos los vehículos
       description: |-
@@ -46,9 +38,26 @@ paths:
         | *200*     |  OK     | Hay vehiculos     |
         | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
         | *404*     |  NOT FOUND     | No hay vehiculos     |
-        | *500*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
+        | *502*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
 components:
   schemas:
+    Link:
+      description: Enlaces anterior y siguiente página
+      title: 'Links'
+      type: object
+      properties:
+        href:
+          description: URLs de los enlaces
+          type: string
+          format: uri
+          x-faker: internet.url
+        rel:
+          description: "Relacion de los enlaces separados por un espacio"
+          type: string
+          x-faker: lorem.words
+      example:
+        href: https://www.EstoEsUnEjemplo.com/ejemplo/ejemplo2
+        rel: Accion1_AnteriorPag Accion2_SiguientePag
     vehiculo:
       title: vehiculo
       description: objeto vehiculo a gestionar
@@ -138,15 +147,52 @@ components:
           type: string
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
+  headers:
+    ETag:
+      description: Entity Tag (identificador único proporcionado para validación de caché)
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
+        x-faker: random.uuid
+        example: 123456789qwertyu
+    Allow:
+      description: Lista de métodos HTTP soportados por ETags
+      schema:
+        type: string
+      example: GET,DELETE,PUT,OPTIONS
+    Location:
+      description: '`URI` del nuevo recurso'
+      schema:
+        type: string
+        format: uri
+        x-faker: internet.url
+        example:
+          https://www.miurl.com/api/v1/vehiculo/1
   responses:
     Response_200:
+      headers:
+        ETag:
+          $ref: '#/components/headers/ETag'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas'
-          examples:
-            response-http-200:
-              $ref: '#/components/examples/response-http-200'
+            type: object
+            properties:
+              vehiculos:
+                description: Listado de vehiculos
+                type: array
+                items:
+                  $ref: '#/components/schemas/vehiculo'
+              links:
+                description: Enlaces de paginación
+                readOnly: true
+                type: object
+                properties:
+                  prevPage:
+                    $ref: '#/components/schemas/Link'
+                  nextPage:
+                    $ref: '#/components/schemas/Link'
+                  
       description: '`OK`: el objeto ha sido modificado'
     Response_201:
       content:
@@ -205,14 +251,14 @@ components:
             response-http-408:
               $ref: '#/components/examples/response-http-408'
       description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
-    Response_500:
+    Response_502:
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-408:
-              $ref: '#/components/examples/response-http-500'
+              $ref: '#/components/examples/response-http-502'
       description: '`INTERNAL SERVER ERROR`: Ha ocurrido un error en el servidor'
 
   parameters:
@@ -255,13 +301,7 @@ components:
       allowEmptyValue: false
       x-last-modified: 1648886922545
   examples:
-    response-http-200:
-      value:
-        type: https://httpstatuses.com/200
-        title: OK
-        status: 200
-        detail: La petición realizada ha sido un éxito
-        instance: about:blank
+
     response-http-201:
       value:
         type: https://httpstatuses.com/200
@@ -304,11 +344,11 @@ components:
         status: 408
         detail: Se ha perdido la conexión con el servidor
         instance: about:blank
-    response-http-500:
+    response-http-502:
       value:
-        type: https://httpstatuses.com/500
+        type: https://httpstatuses.com/502
         title: INTERNAL SERVER ERROR
-        status: 500
+        status: 502
         detail: Error en el servidor
         instance: about:blank
 
