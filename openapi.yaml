@@ -5,7 +5,48 @@ info:
   description: >-
     Práctica realizada por el grupo 4 realizando el subservicio de gestión de
     coches en el taller
+  x-logo:
+    url: ''
+servers:
+  - url: https://api.example.io
+paths:
+  /vehiculo:
+    summary: ''
+    description: Obtenemos el listado de todos los vehículos en el sistema.
+    get:
+      tags:
+        - vehículo
+      parameters:
+        - $ref: '#/components/parameters/OrdenacionVehiculo'
+          name: OrdenacionVehiculo
+          x-last-modified: 1648887031619
+        - $ref: '#/components/parameters/direccionOrden'
+          name: direccionOrden
+          x-last-modified: 1648887049780
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_200'
+          x-last-modified: 1648885705281
+        '400':
+          $ref: '#/components/responses/Response_400'
+          x-last-modified: 1648885875729
+        '404':
+          $ref: '#/components/responses/Response_404'
+          x-last-modified: 1648885841723
+        '500':
+          $ref: '#/components/responses/Response_500'
+          x-last-modified: 1648888952394
+      operationId: vehiculos_get
+      summary: Obtenemos el listado de todos los vehículos
+      description: |-
+        Las posibles respuestas a esta operación son:
 
+        | Código error | Descripción | Motivo |
+        | -------- | -------- | -------- |
+        | *200*     |  OK     | Hay vehiculos     |
+        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
+        | *404*     |  NOT FOUND     | No hay vehiculos     |
+        | *500*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
 components:
   schemas:
     vehiculo:
@@ -117,7 +158,7 @@ components:
               $ref: '#/components/examples/response-http-201'
       description: El recurso ha sido creado
       headers:
-       Location:
+        Location:
           $ref: '#/components/schemas'
     Response_400:
       content:
@@ -170,9 +211,49 @@ components:
           schema:
             $ref: '#/components/schemas/HTTP_Problem'
           examples:
-            response-http-500:
+            response-http-408:
               $ref: '#/components/examples/response-http-500'
-      description: Internal server error
+      description: '`INTERNAL SERVER ERROR`: Ha ocurrido un error en el servidor'
+
+  parameters:
+    OrdenacionVehiculo:
+      deprecated: false
+      name: Ordenación
+      description: Ordenación del listado de los vehículos
+      schema:
+        description: |-
+          Ordenación de la respuesta por los siguientes parámetros:
+          * VIN
+          * año
+          * reparacionUltima
+          * clienteID
+        enum:
+          - VIN
+          - año
+          - reparacionUltima
+          - clienteID
+        type: string
+      in: query
+      required: false
+      allowEmptyValue: false
+      x-last-modified: 1648886783946
+    direccionOrden:
+      deprecated: false
+      name: Dirección del orden
+      description: |-
+        Se elige entre orden:
+        * ASC -> ASCENDENTE
+        * DES -> DESCENTENTE
+      schema:
+        description: Tipo de orden ascendente o descendente
+        enum:
+          - ASC
+          - DESC
+        type: string
+      in: query
+      required: false
+      allowEmptyValue: false
+      x-last-modified: 1648886922545
   examples:
     response-http-200:
       value:
@@ -230,88 +311,8 @@ components:
         status: 500
         detail: Error en el servidor
         instance: about:blank
-  securitySchemes: {}
-  headers: {}
-  parameters:
-    OrdenacionVehiculo:
-      name: Ordenación
-      in: query
-      description: Ordenación del listado de los vehículos
-      required: false
-      deprecated: false
-      schema:
-        type: string
-        enum:
-          - VIN
-          - año
-          - reparacionUltima
-          - clienteID
-        description: |-
-          Ordenación de la respuesta por los siguientes parámetros:
-          * VIN
-          * año
-          * reparacionUltima
-          * clienteID
-      allowEmptyValue: false
-      x-last-modified: 1648886783946
-    direccionOrden:
-      name: Dirección del orden
-      in: query
-      description: |-
-        Se elige entre orden:
-        * ASC -> ASCENDENTE
-        * DES -> DESCENTENTE
-      required: false
-      deprecated: false
-      schema:
-        type: string
-        enum:
-          - ASC
-          - DESC
-        description: Tipo de orden ascendente o descendente
-      allowEmptyValue: false
-      x-last-modified: 1648886922545
-tags:
-  - name: vehículo
-    description: vehículo a gestionar
-servers:
-  - url: https://api.example.io
-security: []
-paths:
-  /vehiculo:
-    summary: ''
-    description: Obtenemos el listado de todos los vehículos en el sistema.
-    get:
-      tags:
-        - vehículo
-      operationId: vehiculos_get
-      summary: Obtenemos el listado de todos los vehículos
-      description: |
-        Las posibles respuestas a esta operación son:
 
-        | Código error | Descripción | Motivo |
-        | -------- | -------- | -------- |
-        | *200*     |  OK     | Hay vehiculos     |
-        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
-        | *404*     |  NOT FOUND     | No hay vehiculos     |
-      responses:
-        '200':
-          $ref: '#/components/responses/Response_200'
-          x-last-modified: 1648885705281
-        '400':
-          $ref: '#/components/responses/Response_400'
-          x-last-modified: 1648885875729
-        '404':
-          $ref: '#/components/responses/Response_404'
-          x-last-modified: 1648885841723
-      parameters:
-        - $ref: '#/components/parameters/OrdenacionVehiculo'
-          name: OrdenacionVehiculo
-          x-last-modified: 1648887031619
-        - $ref: '#/components/parameters/direccionOrden'
-          name: direccionOrden
-          x-last-modified: 1648887049780
-        
+
         
         
         
