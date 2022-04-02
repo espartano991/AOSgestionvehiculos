@@ -1,35 +1,25 @@
 openapi: 3.0.2
-
-info: 
-  title: 'Practica AOS gestión de vehículos subsistema_2'
-  description: 'Práctica realizada por el grupo 4 realizando el subservicio de gestión de coches en el taller'
+info:
+  title: Practica AOS gestión de vehículos subsistema_2
   version: '1.0'
-  
-  
-tags:
-  - name: 'vehículo'
-    description: 'vehículo a gestionar'
-    
-    
-paths:
-  /vehiculo:
-  
-components: 
+  description: >-
+    Práctica realizada por el grupo 4 realizando el subservicio de gestión de
+    coches en el taller
+
+components:
   schemas:
     vehiculo:
-      description: 'objeto vehiculo a gestionar'
-      title: 'vehiculo'
-      type: object
-      
+      title: vehiculo
+      description: objeto vehiculo a gestionar
       required:
-      - VIN
-      - matricula
-      - marca
-      - modelo
-      - motor
-      - clienteID
-      - proposito
-      
+        - VIN
+        - matricula
+        - marca
+        - modelo
+        - motor
+        - clienteID
+        - proposito
+      type: object
       properties:
         VIN:
           description: Identificador único de cada vehículo
@@ -39,14 +29,14 @@ components:
           type: string
         marca:
           description: Marca del vehículo (mercedes, porche, etc.)
-          type : string
+          type: string
         modelo:
           description: Modelo de vehículo
           type: string
         año:
+          format: int32
           description: Año de fabricación del vehiculo
           type: integer
-          format: int32
         motor:
           description: Cilindrada del motor, CV del motor, tipo de motor.
           type: string
@@ -54,17 +44,17 @@ components:
           description: Identificador único del cliente propietario del vehículo
           type: string
         reparacionUltima:
-          description: Año de la última reparación del vehículo
-          type: integer
           nullable: true
           format: int32
+          description: Año de la última reparación del vehículo
+          type: integer
         proposito:
           description: Propósito de la visita. Para reparar o revisar.
-          type: string
           enum:
             - Reparar
             - Revisar
             - Reparar y Revisar
+          type: string
       example:
         vehiculo:
           VIN: MNCLSFE405W491230
@@ -76,60 +66,60 @@ components:
           clienteID: qwer1234
           reparacionUltima: 2021
           proposito: Reparar y Revisar
-          
     HTTP_Problem:
-      type: object
-      externalDocs:
-        url: https://tools.ietf.org/html/rfc7807
-      description: |
+      description: >
         Problem Details for HTTP APIs
+
         [https://tools.ietf.org/html/rfc7807](https://tools.ietf.org/html/rfc7807)
+      type: object
       properties:
         type:
-          type: string
           format: uri
           description: A URI reference [RFC3986] that identifies the problem type
+          type: string
         title:
-          type: string
           description: short human-readable summary of the problem type
+          type: string
         status:
-          type: number
           description: HTTP status code
+          type: number
         detail:
+          description: >-
+            human-readable explanation specific to this occurrence of the
+            problem
           type: string
-          description: human-readable explanation specific to this occurrence of the problem
         instance:
-          type: string
           format: uri
-          description: "A URI reference that identifies the specific
-                    occurrence of the problem.  It may or may not yield further
-                    information if dereferenced"
-  
+          description: >-
+            A URI reference that identifies the specific occurrence of the
+            problem.  It may or may not yield further information if
+            dereferenced
+          type: string
+      externalDocs:
+        url: https://tools.ietf.org/html/rfc7807
   responses:
     Response_200:
-      description: '`OK`: el objeto ha sido modificado'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/'
+            $ref: '#/components/schemas'
           examples:
             response-http-200:
               $ref: '#/components/examples/response-http-200'
-
+      description: '`OK`: el objeto ha sido modificado'
     Response_201:
-      description: 'El recurso ha sido creado'
-      Location: 
-        $ref: '#/components/schemas/'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/'
+            $ref: '#/components/schemas'
           examples:
             response-http-201:
-              $ref: '#/components/examples/response-http-201'  
-  
+              $ref: '#/components/examples/response-http-201'
+      description: El recurso ha sido creado
+      headers:
+       Location:
+          $ref: '#/components/schemas'
     Response_400:
-      description: '`Bad Request`: el recurso no se encuentra disponible'
       content:
         application/problem+json:
           schema:
@@ -137,9 +127,8 @@ components:
           examples:
             response-http-400:
               $ref: '#/components/examples/response-http-400'
-
+      description: '`Bad Request`: el recurso no se encuentra disponible'
     Response_401:
-      description: '`UNAUTHORIZED`: no dispone de las credenciales válidas'
       content:
         application/problem+json:
           schema:
@@ -147,9 +136,8 @@ components:
           examples:
             response-http-401:
               $ref: '#/components/examples/response-http-401'
-           
+      description: '`UNAUTHORIZED`: no dispone de las credenciales válidas'
     Response_403:
-      description: '`FORBIDDEN`: la petición no ha sido autorizada'
       content:
         application/problem+json:
           schema:
@@ -157,9 +145,8 @@ components:
           examples:
             response-http-403:
               $ref: '#/components/examples/response-http-403'
-              
+      description: '`FORBIDDEN`: la petición no ha sido autorizada'
     Response_404:
-      description: '`NOT FOUND`: el recurso no se encuentra disponible'
       content:
         application/problem+json:
           schema:
@@ -167,92 +154,163 @@ components:
           examples:
             response-http-404:
               $ref: '#/components/examples/response-http-404'
-
+      description: '`NOT FOUND`: el recurso no se encuentra disponible'
     Response_408:
-      description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-408:
-              $ref: '#/components/examples/response-http-408'      
-
+              $ref: '#/components/examples/response-http-408'
+      description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
     Response_500:
-      description: 'Internal server error'
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-500:
-              $ref: '#/components/examples/response-http-500'  
-
+              $ref: '#/components/examples/response-http-500'
+      description: Internal server error
   examples:
     response-http-200:
       value:
         type: https://httpstatuses.com/200
         title: OK
         status: 200
-        detail: 'La petición realizada ha sido un éxito'
+        detail: La petición realizada ha sido un éxito
         instance: about:blank
-        
     response-http-201:
       value:
         type: https://httpstatuses.com/200
         title: Resource Created
         status: 201
-        detail: 'El recurso ha sido creado'
-        instance: about:blank        
-  
+        detail: El recurso ha sido creado
+        instance: about:blank
     response-http-400:
       value:
         type: https://httpstatuses.com/400
         title: Bad Request
         status: 400
-        detail: 'La petición realizada es incorrecta'
+        detail: La petición realizada es incorrecta
         instance: about:blank
-
     response-http-401:
       value:
         type: https://httpstatuses.com/401
         title: UNAUTHORIZED
         status: 401
-        detail: 'Las credenciales no son correctas'
+        detail: Las credenciales no son correctas
         instance: about:blank
-
     response-http-403:
       value:
         type: https://httpstatuses.com/403
         title: FORBIDDEN
         status: 403
-        detail: 'La petición es correcta pero no se autoriza'
+        detail: La petición es correcta pero no se autoriza
         instance: about:blank
-        
     response-http-404:
       value:
         type: https://httpstatuses.com/404
         title: NOT FOUND
         status: 404
-        detail: 'El recurso con el vehículo solicitado no se encuentra disponible'
+        detail: El recurso con el vehículo solicitado no se encuentra disponible
         instance: about:blank
-
     response-http-408:
       value:
         type: https://httpstatuses.com/408
         title: REQUEST_TIMEOUT
         status: 408
-        detail: 'Se ha perdido la conexión con el servidor'
+        detail: Se ha perdido la conexión con el servidor
         instance: about:blank
-
     response-http-500:
       value:
         type: https://httpstatuses.com/500
         title: INTERNAL SERVER ERROR
         status: 500
-        detail: 'Error en el servidor'
+        detail: Error en el servidor
         instance: about:blank
-    
+  securitySchemes: {}
+  headers: {}
+  parameters:
+    OrdenacionVehiculo:
+      name: Ordenación
+      in: query
+      description: Ordenación del listado de los vehículos
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        enum:
+          - VIN
+          - año
+          - reparacionUltima
+          - clienteID
+        description: |-
+          Ordenación de la respuesta por los siguientes parámetros:
+          * VIN
+          * año
+          * reparacionUltima
+          * clienteID
+      allowEmptyValue: false
+      x-last-modified: 1648886783946
+    direccionOrden:
+      name: Dirección del orden
+      in: query
+      description: |-
+        Se elige entre orden:
+        * ASC -> ASCENDENTE
+        * DES -> DESCENTENTE
+      required: false
+      deprecated: false
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC
+        description: Tipo de orden ascendente o descendente
+      allowEmptyValue: false
+      x-last-modified: 1648886922545
+tags:
+  - name: vehículo
+    description: vehículo a gestionar
+servers:
+  - url: https://api.example.io
+security: []
+paths:
+  /vehiculo:
+    summary: ''
+    description: Obtenemos el listado de todos los vehículos en el sistema.
+    get:
+      tags:
+        - vehículo
+      operationId: vehiculos_get
+      summary: Obtenemos el listado de todos los vehículos
+      description: |
+        Las posibles respuestas a esta operación son:
+
+        | Código error | Descripción | Motivo |
+        | -------- | -------- | -------- |
+        | *200*     |  OK     | Hay vehiculos     |
+        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
+        | *404*     |  NOT FOUND     | No hay vehiculos     |
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_200'
+          x-last-modified: 1648885705281
+        '400':
+          $ref: '#/components/responses/Response_400'
+          x-last-modified: 1648885875729
+        '404':
+          $ref: '#/components/responses/Response_404'
+          x-last-modified: 1648885841723
+      parameters:
+        - $ref: '#/components/parameters/OrdenacionVehiculo'
+          name: OrdenacionVehiculo
+          x-last-modified: 1648887031619
+        - $ref: '#/components/parameters/direccionOrden'
+          name: direccionOrden
+          x-last-modified: 1648887049780
         
         
         
