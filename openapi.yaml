@@ -46,7 +46,49 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/Response_204'
-
+  /vehiculo/{VIN_vh}:
+    parameters:
+      - $ref: '#/components/parameters/VIN_Vehiculo'
+    summary: 'Operaciones sobre vehículos individuales según su VIN'
+    put:
+      tags:
+        - vehiculo
+      summary: Actualización de datos de vehículos según su VIN
+      description: >
+        Modificación de los parámetros de un vehículo, identificado por su VIN
+        Las posibles respuestas a esta operación son:
+        | Código error | Descripción | Motivo |
+        | -------- | -------- | -------- |
+        | *200*     |  OK     | Operación realizada con éxito     |
+        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
+        | *404*     |  NOT FOUND     | Vehículo no encontrado     |
+      operationId: vehiculos_put
+      requestBody:
+        $ref: '#/components/requestBodies/vehiculoUpdate'
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_200'
+        '400':
+          $ref: '#/components/responses/Response_400'
+        '404':
+          $ref: '#/components/responses/Response_404'
+    delete:
+      tags: 
+        - vehiculo
+      summary: Eliminación de vehículo según su identificador VIN.
+      description: >
+        Eliminación de un vehículo, identificado a partir de su VIN.
+        Las posibles respuestas a esta operación son:
+        | Código error | Descripción | Motivo |
+        | -------- | -------- | -------- |
+        | *204*     |  NO CONTENT     | Eliminación de vehículo realizada con éxito     |
+        | *404*     |  NOT FOUND     | Vehículo no encontrado     |
+      operationId: vehiculos_delete
+      responses:
+        '204':
+          $ref: '#/components/responses/Response_204'
+        '404':
+          $ref: '#/components/responses/Response_404'
 components:
   schemas:
     Link:
@@ -154,6 +196,49 @@ components:
           type: string
       externalDocs:
         url: https://tools.ietf.org/html/rfc7807
+  requestBodies:
+    vehiculoUpdate:
+      description: Actualización de datos de un vehículo
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              matricula:
+                description: Matrícula del vehículo
+                type: string
+              marca:
+                description: Marca del vehículo (mercedes, porche, etc.)
+                type: string
+              modelo:
+                description: Modelo de vehículo
+                type: string
+              año:
+                format: int32
+                description: Año de fabricación del vehiculo
+                type: integer
+              motor:
+                description: Cilindrada del motor, CV del motor, tipo de motor.
+                type: string
+              clienteID:
+                description: Identificador único del cliente propietario del vehículo
+                type: string
+              proposito:
+                description: Propósito de la visita. Para reparar o revisar.
+                enum:
+                  - Reparar
+                  - Revisar
+                  - Reparar y Revisar
+                type: string
+          example:
+            vehiculo:
+              matricula: XEC4567YX
+              marca: Ford
+              modelo: Mustang
+              año: 1987
+              motor: V8, 500 CV, gasolina
+              clienteID: qwer1234
+              proposito: Reparar y Revisar
   headers:
     ETag:
       description: Entity Tag (identificador único proporcionado para validación de caché)
@@ -281,6 +366,13 @@ components:
       description: '`INTERNAL SERVER ERROR`: Ha ocurrido un error en el servidor'
 
   parameters:
+    VIN_Vehiculo:
+      name: VIN_vh
+      in: path
+      description: Identificador de vehículo
+      schema:
+        type: string
+      required: true
     OrdenacionVehiculo:
       deprecated: false
       name: Ordenación
