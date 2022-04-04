@@ -5,7 +5,6 @@ info:
   description: >-
     Práctica realizada por el grupo 4 realizando el subservicio de gestión de
     coches en el taller
-
 servers:
   - url: https://api.example.io
 paths:
@@ -32,13 +31,22 @@ paths:
       summary: Obtenemos el listado de todos los vehículos
       description: |-
         Las posibles respuestas a esta operación son:
-
         | Código error | Descripción | Motivo |
         | -------- | -------- | -------- |
         | *200*     |  OK     | Hay vehiculos     |
         | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
         | *404*     |  NOT FOUND     | No hay vehiculos     |
         | *502*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
+    options:
+      description: >
+        Listado de todos los métodos soportados. Estos métodos están listados en
+        la cabecera "Allow".
+      operationId: operation_Vehiculo
+      summary: Listado de métodos HTTP soportados
+      responses:
+        '204':
+          $ref: '#/components/responses/Response_204'
+
 components:
   schemas:
     Link:
@@ -119,7 +127,6 @@ components:
     HTTP_Problem:
       description: >
         Problem Details for HTTP APIs
-
         [https://tools.ietf.org/html/rfc7807](https://tools.ietf.org/html/rfc7807)
       type: object
       properties:
@@ -156,10 +163,12 @@ components:
         x-faker: random.uuid
         example: 123456789qwertyu
     Allow:
-      description: Lista de métodos HTTP soportados por ETags
+      description: >-
+        Lista de métodos HTTP soportados por ETags
+          ----------GET|DELETE|PUT|OPTIONS----------
       schema:
         type: string
-      example: GET,DELETE,PUT,OPTIONS
+      example: 'GET|DELETE|PUT|OPTIONS'
     Location:
       description: '`URI` del nuevo recurso'
       schema:
@@ -168,6 +177,8 @@ components:
         x-faker: internet.url
         example:
           https://www.miurl.com/api/v1/vehiculo/1
+          
+
   responses:
     Response_200:
       headers:
@@ -251,6 +262,14 @@ components:
             response-http-408:
               $ref: '#/components/examples/response-http-408'
       description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
+    Response_204:
+      description: |-
+        La operación se ha realizado correctamente.
+        **No se devuelve cuerpo**
+      headers:
+        Allow:
+          $ref: '#/components/headers/Allow'
+        
     Response_502:
       content:
         application/problem+json:
@@ -352,8 +371,6 @@ components:
         detail: Error en el servidor
         instance: about:blank
 
-
-        
         
         
         
