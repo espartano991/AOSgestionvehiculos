@@ -5,12 +5,63 @@ info:
   description: >-
     Práctica realizada por el grupo 4 realizando el subservicio de gestión de
     coches en el taller
-  x-logo:
-    url: ''
 servers:
   - url: https://api.example.io
 paths:
-  /vehiculo/{VIN_vh}:
+  /vehiculo:
+    summary: Obtenemos el listado de todos los vehículos en el sistema.
+    get:
+      tags:
+        - vehiculo
+      parameters:
+        - $ref: '#/components/parameters/OrdenacionVehiculo'
+        - $ref: '#/components/parameters/direccionOrden'
+      responses:
+        '200':
+          $ref: '#/components/responses/Response_200'
+        '400':
+          $ref: '#/components/responses/Response_400'
+        '404':
+          $ref: '#/components/responses/Response_404'
+        '502':
+          $ref: '#/components/responses/Response_502'
+      operationId: vehiculos_get
+      summary: Obtenemos el listado de todos los vehículos
+      description: |-
+        Las posibles respuestas a esta operación son:
+        | Código error | Descripción | Motivo |
+        | -------- | -------- | -------- |
+        | *200*     |  OK     | Hay vehiculos     |
+        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
+        | *404*     |  NOT FOUND     | No hay vehiculos     |
+        | *502*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/VehiculoCreacion'
+      tags:
+        - vehiculo
+      responses:
+        '201':
+          $ref: '#/components/responses/Response_201'
+        '400':
+          $ref: '#/components/responses/Response_400'
+        '502':
+          $ref: '#/components/responses/Response_502'
+      operationId: vehiculos_post
+      summary: Creación de un registro de un vehículo
+      description: Método para crear un recurso de tipo vehículo
+    options:
+      tags:
+        - vehiculo
+      responses:
+        '204':
+          $ref: '#/components/responses/Response_204'
+      operationId: operation_Vehiculo
+      summary: Listado de métodos HTTP soportados
+      description: >
+        Listado de todos los métodos soportados. Estos métodos están listados en
+        la cabecera "Allow".
+/vehiculo/{VIN_vh}:
     summary: Operaciones sobre vehículos individuales según su VIN
     put:
       requestBody:
@@ -75,60 +126,6 @@ paths:
           $ref: '#/components/responses/Response_502'
       parameters:
         - $ref: '#/components/parameters/VIN_Vehiculo'
-  /vehiculo:
-    summary: Obtenemos el listado de todos los vehículos en el sistema.
-    get:
-      tags:
-        - vehiculo
-      parameters:
-        - $ref: '#/components/parameters/OrdenacionVehiculo'
-        - $ref: '#/components/parameters/direccionOrden'
-      responses:
-        '200':
-          $ref: '#/components/responses/Response_200'
-        '400':
-          $ref: '#/components/responses/Response_400'
-        '404':
-          $ref: '#/components/responses/Response_404'
-        '502':
-          $ref: '#/components/responses/Response_502'
-      operationId: vehiculos_get
-      summary: Obtenemos el listado de todos los vehículos
-      description: |-
-        Las posibles respuestas a esta operación son:
-        | Código error | Descripción | Motivo |
-        | -------- | -------- | -------- |
-        | *200*     |  OK     | Hay vehiculos     |
-        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
-        | *404*     |  NOT FOUND     | No hay vehiculos     |
-        | *502*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
-    post:
-      requestBody:
-        $ref: '#/components/requestBodies/VehiculoCreacion'
-      tags:
-        - vehiculo
-      responses:
-        '201':
-          $ref: '#/components/responses/Response_201'
-        '400':
-          $ref: '#/components/responses/Response_400'
-        '502':
-          $ref: '#/components/responses/Response_502'
-      operationId: vehiculos_post
-      summary: Creación de un registro de un vehículo
-      description: Método para crear un recurso de tipo vehículo
-    options:
-      tags:
-        - vehiculo
-      responses:
-        '204':
-          $ref: '#/components/responses/Response_204'
-      operationId: operation_Vehiculo
-      summary: Listado de métodos HTTP soportados
-      description: >
-        Listado de todos los métodos soportados. Estos métodos están listados en
-        la cabecera "Allow".
-
 components:
   schemas:
     Link:
