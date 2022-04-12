@@ -79,6 +79,8 @@ paths:
           $ref: '#/components/responses/Response_400'
         '404':
           $ref: '#/components/responses/Response_404'
+        '412':
+          $ref: '#/components/responses/Response_412'
       operationId: vehiculos_put
       summary: Actualización de datos de vehículos según su VIN
       description: |-
@@ -88,7 +90,8 @@ paths:
         | ------------ | ----------- | -------------------------------   | 
         |    *200*     |      OK     | Operación realizada con éxito     | 
         |    *400*     | BAD REQUEST | Sintaxis incorrecta               | 
-        | *404*        |  NOT FOUND  | Vehículo no encontrado            |
+        |    *404*     |  NOT FOUND  | Vehículo no encontrado            |
+        |    *412*     |  Precondition Failed  | HTTP header no coincide con la enviada       |  
     delete:
       tags:
         - vehiculo
