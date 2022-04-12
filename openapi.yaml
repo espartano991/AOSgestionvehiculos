@@ -138,104 +138,12 @@ paths:
 components:
   schemas:
     Link:
-      title: Links
-      description: Enlaces anterior y siguiente página
-      type: object
-      properties:
-        href:
-          format: uri
-          description: URLs de los enlaces
-          type: string
-          x-faker: internet.url
-        rel:
-          description: Relacion de los enlaces separados por un espacio
-          type: string
-          x-faker: lorem.words
-      example:
-        href: https://www.EstoEsUnEjemplo.com/ejemplo/ejemplo2
-        rel: Accion1_AnteriorPag Accion2_SiguientePag
-    
+      $ref: './schemas/Link.yaml'
     vehiculo:
-      title: vehiculo
-      description: objeto vehiculo a gestionar
-      required:
-        - VIN
-        - matricula
-        - marca
-        - modelo
-        - motor
-        - clienteID
-      type: object
-      properties:
-        VIN:
-          description: Identificador único de cada vehículo
-          type: string
-        matricula:
-          description: Matrícula del vehículo
-          type: string
-        marca:
-          description: Marca del vehículo (mercedes, porche, etc.)
-          type: string
-        modelo:
-          description: Modelo de vehículo
-          type: string
-        año:
-          format: int32
-          description: Año de fabricación del vehiculo
-          type: integer
-        motor:
-          description: Cilindrada del motor, CV del motor, tipo de motor.
-          type: string
-        clienteID:
-          description: Identificador único del cliente propietario del vehículo
-          type: string
-        reparacionUltima:
-          nullable: true
-          format: int32
-          description: Año de la última reparación del vehículo
-          type: integer
-      example:
-        vehiculo:
-          VIN: MNCLSFE405W491230
-          matricula: XEC4567YX
-          marca: Ford
-          modelo: Mustang
-          año: 1987
-          motor: V8, 500 CV, gasolina
-          clienteID: qwer1234
-          reparacionUltima: 2021
-          
+      $ref: './schemas/vehiculo.yaml'
     HTTP_Problem:
-      description: >
-        Problem Details for HTTP APIs
-        [https://tools.ietf.org/html/rfc7807](https://tools.ietf.org/html/rfc7807)
-      type: object
-      properties:
-        type:
-          format: uri
-          description: A URI reference [RFC3986] that identifies the problem type
-          type: string
-        title:
-          description: short human-readable summary of the problem type
-          type: string
-        status:
-          description: HTTP status code
-          type: number
-        detail:
-          description: >-
-            human-readable explanation specific to this occurrence of the
-            problem
-          type: string
-        instance:
-          format: uri
-          description: >-
-            A URI reference that identifies the specific occurrence of the
-            problem.  It may or may not yield further information if
-            dereferenced
-          type: string
-      externalDocs:
-        url: https://tools.ietf.org/html/rfc7807
-        
+      $ref: './schemas/HTTP_Problem.yaml'
+
   responses:
     Response_200:
       content:
@@ -265,7 +173,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas'
+            $ref: '#/components/schemas/HTTP_Problem'
           examples:
             response-http-201:
               $ref: '#/components/examples/response-http-201'
