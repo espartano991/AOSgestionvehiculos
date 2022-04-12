@@ -45,6 +45,8 @@ paths:
           $ref: '#/components/responses/Response_201'
         '400':
           $ref: '#/components/responses/Response_400'
+        '422':
+          $ref: '#/components/responses/Response_422'
         '502':
           $ref: '#/components/responses/Response_502'
       operationId: vehiculos_post
@@ -64,6 +66,8 @@ paths:
   /vehiculo/{VIN_vh}:
     summary: Operaciones sobre vehículos individuales según su VIN
     put:
+      parameters:
+        - $ref: '#/components/parameters/ifMatchParam'
       requestBody:
         $ref: '#/components/requestBodies/vehiculoUpdate'
       tags:
@@ -77,13 +81,14 @@ paths:
           $ref: '#/components/responses/Response_404'
       operationId: vehiculos_put
       summary: Actualización de datos de vehículos según su VIN
-      description: >
+      description: |-
         Modificación de los parámetros de un vehículo, identificado por su VIN
-        Las posibles respuestas a esta operación son: | Código error |
-        Descripción | Motivo | | -------- | -------- | -------- | | *200*     | 
-        OK     | Operación realizada con éxito     | | *400*     |  BAD
-        REQUEST     | Sintaxis incorrecta     | | *404*     |  NOT FOUND     |
-        Vehículo no encontrado     |
+        Las posibles respuestas a esta operación son: 
+        | Código error | Descripción | Motivo                            | 
+        | ------------ | ----------- | -------------------------------   | 
+        |    *200*     |      OK     | Operación realizada con éxito     | 
+        |    *400*     | BAD REQUEST | Sintaxis incorrecta               | 
+        | *404*        |  NOT FOUND  | Vehículo no encontrado            |
     delete:
       tags:
         - vehiculo
@@ -94,12 +99,13 @@ paths:
           $ref: '#/components/responses/Response_404'
       operationId: vehiculos_delete
       summary: Eliminación de vehículo según su identificador VIN.
-      description: >
+      description: |-
         Eliminación de un vehículo, identificado a partir de su VIN. Las
-        posibles respuestas a esta operación son: | Código error | Descripción |
-        Motivo | | -------- | -------- | -------- | | *204*     |  NO
-        CONTENT     | Eliminación de vehículo realizada con éxito     | |
-        *404*     |  NOT FOUND     | Vehículo no encontrado     |
+        posibles respuestas a esta operación son: 
+        | Código error | Descripción | Motivo                                      | 
+        | ------------ | ----------- | ------------------------------------------- | 
+        | *204*        |  NO CONTENT | Eliminación de vehículo realizada con éxito | 
+        | *404*        |  NOT FOUND  | Vehículo no encontrado                      |
     parameters:
       - $ref: '#/components/parameters/VIN_Vehiculo'
     get:
@@ -109,12 +115,12 @@ paths:
       summary: Obtención de un vehículo por VIN
       description: |-
         Las posibles respuestas a esta operación son:
-        | Código error | Descripción | Motivo |
-        | -------- | -------- | -------- |
-        | *200*     |  OK     | Hay vehiculos     |
-        | *400*     |  BAD REQUEST     | Sintaxis incorrecta     |
-        | *404*     |  NOT FOUND     | No hay vehiculos     |
-        | *502*     |  INTERNAL SERVER ERROR     | Error en el servidor     |
+        | Código error | Descripción                | Motivo               |
+        | -----------  | -------------------------  | -------------------- |
+        | *200*        |  OK                        | Hay vehiculos        |
+        | *400*        |  BAD REQUEST               | Sintaxis incorrecta  |
+        | *404*        |  NOT FOUND                 | No hay vehiculos     |
+        | *502*        |  INTERNAL SERVER ERROR     | Error en el servidor |
       responses:
         '200':
           $ref: '#/components/responses/Response_200'
@@ -156,7 +162,6 @@ components:
         - modelo
         - motor
         - clienteID
-        - proposito
       type: object
       properties:
         VIN:
@@ -186,13 +191,6 @@ components:
           format: int32
           description: Año de la última reparación del vehículo
           type: integer
-        proposito:
-          description: Propósito de la visita. Para reparar o revisar.
-          enum:
-            - Reparar
-            - Revisar
-            - Reparar y Revisar
-          type: string
       example:
         vehiculo:
           VIN: MNCLSFE405W491230
@@ -203,7 +201,6 @@ components:
           motor: V8, 500 CV, gasolina
           clienteID: qwer1234
           reparacionUltima: 2021
-          proposito: Reparar y Revisar
           
     HTTP_Problem:
       description: >
@@ -238,9 +235,6 @@ components:
         
   responses:
     Response_200:
-      headers:
-        ETag:
-          $ref: '#/components/headers/ETag'
       content:
         application/json:
           schema:
@@ -273,6 +267,13 @@ components:
             response-http-201:
               $ref: '#/components/examples/response-http-201'
       description: El recurso ha sido creado
+    Response_204:
+      headers:
+        Allow:
+          $ref: '#/components/headers/Allow'
+      description: |-
+        La operación se ha realizado correctamente.
+        **No se devuelve cuerpo**
     Response_400:
       content:
         application/problem+json:
@@ -282,24 +283,6 @@ components:
             response-http-400:
               $ref: '#/components/examples/response-http-400'
       description: '`Bad Request`: el recurso no se encuentra disponible'
-    Response_401:
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/HTTP_Problem'
-          examples:
-            response-http-401:
-              $ref: '#/components/examples/response-http-401'
-      description: '`UNAUTHORIZED`: no dispone de las credenciales válidas'
-    Response_403:
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/HTTP_Problem'
-          examples:
-            response-http-403:
-              $ref: '#/components/examples/response-http-403'
-      description: '`FORBIDDEN`: la petición no ha sido autorizada'
     Response_404:
       content:
         application/problem+json:
@@ -318,13 +301,24 @@ components:
             response-http-408:
               $ref: '#/components/examples/response-http-408'
       description: '`REQUEST_TIMEOUT`: se ha perdido la conexión con el recurso'
-    Response_204:
-      headers:
-        Allow:
-          $ref: '#/components/headers/Allow'
-      description: |-
-        La operación se ha realizado correctamente.
-        **No se devuelve cuerpo**
+    Response_412:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-412:
+              $ref: '#/components/examples/response-http-412'
+      description: 'Precondition Failed: HTTP header no coincide con la enviada'      
+    Response_422:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/HTTP_Problem'
+          examples:
+            response-http-422:
+              $ref: '#/components/examples/response-http-422'
+      description: 'Unprocessable Entity: validación de parámetros fallida'
     Response_502:
       content:
         application/problem+json:
@@ -336,6 +330,14 @@ components:
       description: '`INTERNAL SERVER ERROR`: Ha ocurrido un error en el servidor'
       
   parameters:
+    ifMatchParam:
+      name: If-Match
+      in: header
+      description: ETag del vehiculo que se desea modificar
+      required: true
+      schema:
+        type: string
+        pattern: "[0-9a-f]*"
     VIN_Vehiculo:
       name: VIN_vh
       description: Identificador de vehículo
@@ -395,20 +397,6 @@ components:
         status: 400
         detail: La petición realizada es incorrecta
         instance: about:blank
-    response-http-401:
-      value:
-        type: https://httpstatuses.com/401
-        title: UNAUTHORIZED
-        status: 401
-        detail: Las credenciales no son correctas
-        instance: about:blank
-    response-http-403:
-      value:
-        type: https://httpstatuses.com/403
-        title: FORBIDDEN
-        status: 403
-        detail: La petición es correcta pero no se autoriza
-        instance: about:blank
     response-http-404:
       value:
         type: https://httpstatuses.com/404
@@ -423,6 +411,20 @@ components:
         status: 408
         detail: Se ha perdido la conexión con el servidor
         instance: about:blank
+    response-http-412:
+      value:
+        type: https://httpstatuses.com/412
+        title: Precondition Failed
+        status: 412
+        detail: HTTP header no coincide con la enviada
+        instance: about:blank     
+    response-http-422:
+      value:
+        type: https://httpstatuses.com/422
+        title: Unprocessable Entity
+        status: 422
+        detail: Validación de parámetros fallida
+        instance: about:blank        
     response-http-502:
       value:
         type: https://httpstatuses.com/502
@@ -458,13 +460,6 @@ components:
               clienteID:
                 description: Identificador único del cliente propietario del vehículo
                 type: string
-              proposito:
-                description: Propósito de la visita. Para reparar o revisar.
-                enum:
-                  - Reparar
-                  - Revisar
-                  - Reparar y Revisar
-                type: string
           example:
             vehiculo:
               matricula: XEC4567YX
@@ -473,7 +468,6 @@ components:
               año: 1987
               motor: V8, 500 CV, gasolina
               clienteID: qwer1234
-              proposito: Reparar y Revisar
               
     VehiculoCreacion:
       description: Creacion de un recurso tipo vehiculo
@@ -487,7 +481,6 @@ components:
               - año
               - motor
               - clienteID
-              - proposito
             type: object
             properties:
                 matricula:
@@ -509,13 +502,6 @@ components:
                 clienteID:
                   description: Identificador único del cliente propietario del vehículo
                   type: string
-                proposito:
-                  description: Propósito de la visita. Para reparar o revisar.
-                  enum:
-                    - Reparar
-                    - Revisar
-                    - Reparar y Revisar
-                  type: string
           example:
             vehiculo:
               matricula: XEC4567YX
@@ -524,7 +510,6 @@ components:
               año: 2016
               motor: V16, 1500 CV, gasolina
               clienteID: qwer1234
-              proposito: Reparar y Revisar
       required: true
       
   headers:
