@@ -1,0 +1,49 @@
+# Vehiculo
+title: vehiculo
+description: objeto vehiculo a gestionar
+required:
+   - VIN
+   - matricula
+   - marca 
+   - modelo
+   - motor
+   - clienteID
+type: object
+properties:
+  VIN:
+    description: Identificador único de cada vehículo
+    type: string
+  matricula:
+    description: Matrícula del vehículo
+    type: string
+  marca:
+    description: Marca del vehículo (mercedes, porche, etc.)
+    type: string
+  modelo:
+    description: Modelo de vehículo
+    type: string
+  año:
+    format: int32
+    description: Año de fabricación del vehiculo
+    type: integer
+  motor:
+    description: Cilindrada del motor, CV del motor, tipo de motor.
+    type: string
+  clienteID:
+    description: Identificador único del cliente propietario del vehículo
+    type: string
+  reparacionUltima:
+    nullable: true
+    format: int32
+    description: Año de la última reparación del vehículo
+    type: integer
+example:
+  vehiculo:
+    VIN: MNCLSFE405W491230
+    matricula: XEC4567YX
+    marca: Ford
+    modelo: Mustang
+    año: 1987
+    motor: V8, 500 CV, gasolina
+    clienteID: qwer1234
+    reparacionUltima: 2021
