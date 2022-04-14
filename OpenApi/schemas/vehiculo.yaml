@@ -61,6 +61,6 @@ example:
       href: https://ejemplolink.com/api/v1/vehiculo
       rel: listado de todos los vehiculos
     self:
-      href: https://ejemplolink.com/api/v1/vehiculo/{VIN}
+      href: https://ejemplolink.com/api/v1/vehiculo/546
       rel: posibles acciones con vehiculo
       
