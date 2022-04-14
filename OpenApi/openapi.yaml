@@ -12,7 +12,7 @@ info:
     name: Contacto AOS.
     url: https://moodle.upm.es/titulaciones/oficiales/mod/assign/view.php?id=52029
     email: sergio.arroyoram@alumnos.upm.com
-    
+
 servers:
   - url: '{schema}://{server}:{port}/{basePath}'
     description: Servidor

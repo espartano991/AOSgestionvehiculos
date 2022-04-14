@@ -1,3 +1,66 @@
+
+# Arquitectura Orientada a Servicios 2022
+_EQUIPO 4:_
+- Sergio Arroyo Ramos _ sergio.arroyoram@alumnos.upm.es
+- Alberto Seijo Simó _ a.seijo@alumnos.upm.es
+- Víctor Martín Díaz _ victor.martin.diaz@alumnos.upm.es
+- Manuel Antonio García Frino _ 
+- Francisco Andrés Ferreyra _ franciscoandres.ferreyra@alumnos.upm.es
+## Subsistema 2: gestión de vehículos de un taller
+### _**Consideraciones de diseño tomadas**_
+- Se han añadido 4 métodos `GET` | `POST` | `DELETE` | `OPTION`. Se consideró que para la gestión de los vehículos de un taller eran necesarias.
+
+- Se han añadido dos métodos `GET` uno para recuperar el listado de todos los vehículos, ya sea ordenados por: VIN, año, reparacionUltima, clienteID. Además, también se puede ordenar por orden ascendente o descendente. Y otro método para buscar por VIN de vehículo, que es el único atributo que no se repite.
+
+- Se ha considerado que el método `POST` necesita como mínimo los siguientes valores: Matrícula, la marca, el modelo, el año de fabricación, el motor, el id del cliente propietario del vehículo.
+
+- Tras la implementación de los métodos `PUT` y `DELETE` (completan las operaciones CRUD), la especificación alcanza el Nivel 2 de madurez de Richardson. Para alcanzar _**the glory of REST**_, se implementa HATEOAS. Se introducen los _links_ para completar la información del vehículo. En este caso, hacen referencia al siguiente vehículo de la lista, y al anterior.
+
+- Se adjuntan pruebas de todos los métodos y _responses_ posibles en el archivo http-request.http.
+  
+### **_Instrucciones para desplegar el servicio desde 0🐳_**
+###
+Para llevar a cabo el despliegue del servicio son necesarios tres componentes fundamentales:
+- Backend. Con un servidor Mock que hace las veces de server de prueba para realizar las peticiones. 
+- Frontend. Con una utilidad que levanta un servidor HTTP y habilita una interfaz gráfica.
+- Proxy. Con un servidor Proxy que resuelva los problemas de rutas entre Backend y Frontend.
+
+_Docker_ nos permite agrupar los tres componentes sin necesidad de usar una máquina virtual o servidor remoto.
+Para cada parte respectivamente se hará uso de:
+- SpotLight/Prism
+- Swagger-UI
+- Caddy
+
+Los pasos para el despliegue, mediante el uso de `docker-compose`, son los siguientes:
+
+
+#### **1. Situarse en la carpeta de la especificación**
+
+- `cd /ruta/a/la/carpetaBase`
+
+#### **2. Iniciar Docker**
+
+Abrir el _Daemon_ de Docker en la máquina(imprescindible haber instalado Docker Desktop previamente)
+
+#### **3. Ejecutar Docker Compose**
+
+Una vez situado en la carpeta de la especificación, ejecutar el siguiente comando:
+
+- `docker-compose up` (imprescindible estar en la carpeta del proyecto; ya que en esa ruta se encuentra el `.yaml`
+del Docker Compose).
+
+En caso de que no se pueda llevar a cabo, añadir la siguiente sentencia después de `up`:
+
+- `--force-recreate`
+
+#### **4. Acceder al navegador**
+
+En la ruta del navegador, acceder a la URL: `localhost:8000`
+
+#### **5. Juega**
+
+Realizar las peticiones deseadas desde la UI de Swagger. Podrás probar cualquiera de las funcionalidades disponibles.
+
 # AOSgestionvehiculos
 
 > Atributos finales:
@@ -9,15 +72,7 @@
 - año (int)
 - reparación (fecha ultima reparación) (Text) 
 - clienteID (string)
-- propósito (reparar o revisar) (enum)
-> Atributos obligatorios para post:
-- VIN
-- Matrícula
-- Marca
-- Modelo
-- Motor
-- clienteID
-- propósito
+
 > Respuestas_HTTP:
 - 200 OK
 - 201 Created
@@ -26,137 +81,6 @@
 - 401 unauthorized
 - 404 Not Found
 - 408 Request Timeout
-- 500 Internal Server Error
 - 412 Precondition failed (el ETag no es el mismo)
-## Mockup:
-
-coche/  
-  GET  
-  POST  
-  &nbsp;&nbsp;  body: {  
-  &nbsp;&nbsp;&nbsp;&nbsp;	  Matrícula  
-  &nbsp;&nbsp;&nbsp;&nbsp;	  Marca  
-  &nbsp;&nbsp;&nbsp;&nbsp;	  Modelo: (string)  
-  &nbsp;&nbsp;&nbsp;&nbsp;	  Motor: (Text)  
-  &nbsp;&nbsp;	    {  
-  &nbsp;&nbsp;	    cilindrada, (int)  
-  &nbsp;&nbsp;	    CV, (int)  
-  &nbsp;&nbsp;      tipo de motor (enum)  
-&nbsp;&nbsp;&nbsp;&nbsp;  [  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  diesel,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  gasolina,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  híbrido,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  eléctrico  
-&nbsp;&nbsp;&nbsp;&nbsp;  ]  
-  &nbsp;&nbsp;      }  
-&nbsp;&nbsp;  Año: (Date ? Date : int)  
-&nbsp;&nbsp;  Reparación: (Text)  
-&nbsp;&nbsp;&nbsp;&nbsp;  {  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  fecha_reparacion (Date ? Date : int)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ¿Más cosas? ¿Nos salimos del scope?  
-&nbsp;&nbsp;&nbsp;&nbsp;  }  
-&nbsp;&nbsp;  }  
-  PUT  
-
-coche/{vin}/ (string)  
-  GET  
-  PUT  
-  DELETE  
-  
-coche/{matricula}/ (string)  
-  GET  
-  PUT  
-  DELETE  
-  
-coche/{marca}/ (string)  
-  GET  
-  
-coche/{año}/ (int)  
-  GET  
-
-Responses Componente de Reutilizacion:
-
-FALTA DEFINERLES SCHEMAS & EXAMPLES
-
-Response_200:
-      description: '`OK`: el objeto ha sido modificado'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ '
-          examples:
-            response-http-200:
-              $ref: '#/components/examples/response-http-200
-              
-Response_201:
-      description: Nuevo objeto creado
-          headers:
-            Location:
-              $ref: '#/components/headers/Location'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ '
-              examples:
-                response-http-200:
-                 $ref: '#/components/examples/response-http-200
-                  
- Response_400:
-      description: Bad request
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ '
-          examples:
-            response-http-404:
-              $ref: '#/components/examples/response-http-400'
-              
-Response_403:
-      description: Forbidden
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ ‘
-          examples:
-            response-http-403:
-              $ref: '#/components/examples/response-http-403'
-              
-Response_401:
-      description: Unauthorized
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ ‘
-          examples:
-            response-http-401:
-              $ref: '#/components/examples/response-http-401'
-              
-Response_404:
-      description: '`NOT FOUND`: recurso no disponible'
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ '
-          examples:
-            response-http-404:
-              $ref: '#/components/examples/response-http-404'
-
- Response_408:
-      description: Request Timeout
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ '
-          examples:
-            response-http-408:
-              $ref: '#/components/examples/response-http-408'
-              
- Response_500:
-      description: Internal Server Error
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/ '
-          examples:
-            response-http-422:
-              $ref: '#/components/examples/response-http-422'
+- 422 Unprocessable Entity: validación de parámetros fallida
+- 500 Internal Server Error
