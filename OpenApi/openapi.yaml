@@ -97,8 +97,6 @@ paths:
       description: >
         Listado de todos los métodos soportados. Estos métodos están listados en
         la cabecera "Allow".
-  /vehiculo/{VIN_vh}:
-    summary: Operaciones sobre vehículos individuales según su VIN
     put:
       parameters:
         - $ref: '#/components/parameters/ifMatchParam'
@@ -125,7 +123,9 @@ paths:
         |    *200*     |      OK     | Operación realizada con éxito     | 
         |    *400*     | BAD REQUEST | Sintaxis incorrecta               | 
         |    *404*     |  NOT FOUND  | Vehículo no encontrado            |
-        |    *412*     |  Precondition Failed  | HTTP header no coincide con la enviada       |  
+        |    *412*     |  Precondition Failed  | HTTP header no coincide con la enviada       |      
+  /vehiculo/{VIN_vh}:
+    summary: Operaciones sobre vehículos individuales según su VIN
     delete:
       tags:
         - vehiculo

@@ -4,7 +4,7 @@ _EQUIPO 4:_
 - Sergio Arroyo Ramos _ sergio.arroyoram@alumnos.upm.es
 - Alberto Seijo Simó _ a.seijo@alumnos.upm.es
 - Víctor Martín Díaz _ victor.martin.diaz@alumnos.upm.es
-- Manuel Antonio García Frino _ 
+- Manuel Antonio García Frino _ manuel.gfrino@alumnos.upm.es
 - Francisco Andrés Ferreyra _ franciscoandres.ferreyra@alumnos.upm.es
 ## Subsistema 2: gestión de vehículos de un taller
 ### _**Consideraciones de diseño tomadas**_
@@ -14,7 +14,7 @@ _EQUIPO 4:_
 
 - Se ha considerado que el método `POST` necesita como mínimo los siguientes valores: Matrícula, la marca, el modelo, el anno de fabricación, el motor, el id del cliente propietario del vehículo.
 
-- Tras la implementación de los métodos `PUT` y `DELETE` (completan las operaciones CRUD), la especificación alcanza el Nivel 2 de madurez de Richardson. Para alcanzar _**the glory of REST**_, se implementa HATEOAS. Se introducen los _links_ para completar la información del vehículo. En este caso, hacen referencia al siguiente vehículo de la lista, y al anterior.
+- Tras la implementación de los métodos `PUT` y `DELETE` (completan las operaciones CRUD), la especificación alcanza el Nivel 2 de madurez de Richardson. Para alcanzar _**the glory of REST**_, se implementa HATEOAS. Se introducen los _links_ para completar la información del vehículo. En este caso, hacen referencia al listado de todos los vehículos y a las posibles acciones que se pueden realizar con el vehículo
 
 - Se adjuntan pruebas de todos los métodos y _responses_ posibles en el archivo http-request.http.
   
@@ -52,6 +52,9 @@ del Docker Compose).
 En caso de que no se pueda llevar a cabo, añadir la siguiente sentencia después de `up`:
 
 - `--force-recreate`
+  
+La línea de comando a ejecutar quedaría de la siguiente manera:
+`docker-compose up --force-recreate`
 
 #### **4. Acceder al navegador**
 
