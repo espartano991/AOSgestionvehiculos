@@ -14,4 +14,4 @@ properties:
      x-faker: lorem.words
 example:
   href: https://www.EstoEsUnEjemplo.com/ejemplo/ejemplo2
-  rel: Accion1_AnteriorPag Accion2_SiguientePag
+  rel: Accion1_vehiculo Accion2_vehiculo

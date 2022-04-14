@@ -71,14 +71,11 @@ paths:
         201:
           headers:
             Location:
-              $ref: '#/components/headers'
+              $ref: '#/components/headers/Location'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTP_Problem'
-              examples:
-                response-http-201:
-                  $ref: '#/components/examples/response-http-201'
+                $ref: '#/components/schemas/vehiculo'
           description: El recurso ha sido creado
         400:
           $ref: '#/components/responses/Response_400'
@@ -197,7 +194,7 @@ components:
                 description: Enlaces de paginación
                 type: object
                 properties:
-                  prevPage:
+                  listadoVehiculos:
                     $ref: '#/components/schemas/Link'
                   nextPage:
                     $ref: '#/components/schemas/Link'
@@ -398,13 +395,21 @@ components:
                 description: Identificador único del cliente propietario del vehículo
                 type: string
           example:
-            vehiculo:
-              matricula: XEC4567YX
-              marca: Ford
-              modelo: Mustang
-              anno: 1987
-              motor: V8, 500 CV, gasolina
-              clienteID: qwer1234
+            VIN: MNCLSFE405W491230
+            matricula: XEC4567YX
+            marca: Ford
+            modelo: Mustang
+            anno: 1987
+            motor: V8, 500 CV, gasolina
+            clienteID: qwer1234
+            reparacionUltima: 2021
+            links:
+              listadoVehiculos: 
+                href: https://ejemplolink.com/api/v1/vehiculo
+                rel: listado de todos los vehiculos
+              self:
+                href: https://ejemplolink.com/api/v1/vehiculo/{VIN}
+                rel: posibles acciones con vehiculo
               
     VehiculoCreacion:
       description: Creacion de un recurso tipo vehiculo
@@ -440,13 +445,21 @@ components:
                   description: Identificador único del cliente propietario del vehículo
                   type: string
           example:
-            vehiculo:
-              matricula: "XEC4567YX"
-              marca: "Bugatti"
-              modelo: "Chiron super sport"
-              anno: 2016
-              motor: "V16, 1500 CV, gasolina"
-              clienteID: "qwer1234"
+              VIN: MNCLSFE405W491230
+              matricula: XEC4567YX
+              marca: Ford
+              modelo: Mustang
+              anno: 1987
+              motor: V8, 500 CV, gasolina
+              clienteID: qwer1234
+              reparacionUltima: 2021
+              links:
+                listadoVehiculos: 
+                  href: https://ejemplolink.com/api/v1/vehiculo
+                  rel: listado de todos los vehiculos
+                self:
+                  href: https://ejemplolink.com/api/v1/vehiculo/{VIN}
+                  rel: posibles acciones con vehiculo
       required: true
       
   headers:
