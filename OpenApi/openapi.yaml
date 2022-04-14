@@ -5,8 +5,32 @@ info:
   description: >-
     Práctica realizada por el grupo 4 realizando el subservicio de gestión de
     coches en el taller
+  license:
+    name: Grupo 4. Arquitectura Orienta a Servicios (AOS).
+    url: https://github.com/espartano991/AOSgestionvehiculos
+  contact:
+    name: Contacto AOS.
+    url: https://moodle.upm.es/titulaciones/oficiales/mod/assign/view.php?id=52029
+    email: sergio.arroyoram@alumnos.upm.com
+    
 servers:
-  - url: https://api.example.io
+  - url: '{schema}://{server}:{port}/{basePath}'
+    description: Servidor
+    variables: 
+      schemas: 
+        description: Esquema
+        default: https
+      server:
+        description: Dirección IP del servidor
+        default: 127.0.0.1
+      port:
+        description: puerto
+        default: '80'
+      basePath:
+        description: Ruta base 
+        default: api/v1
+
+
 paths:
   /vehiculo:
     summary: Obtenemos el listado de todos los vehículos en el sistema.
