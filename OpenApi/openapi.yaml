@@ -14,12 +14,15 @@ info:
     email: sergio.arroyoram@alumnos.upm.com
 
 servers:
-  - url: '{schema}://{server}:{port}/{basePath}'
+  - url: '{schemas}://{server}:{port}/{basePath}'
     description: Servidor
     variables: 
       schemas: 
         description: Esquema
-        default: https
+        default: http
+        enum: 
+          - http
+          - https
       server:
         description: Dirección IP del servidor
         default: 127.0.0.1
@@ -41,13 +44,13 @@ paths:
         - $ref: '#/components/parameters/OrdenacionVehiculo'
         - $ref: '#/components/parameters/direccionOrden'
       responses:
-        '200':
+        200:
           $ref: '#/components/responses/Response_200'
-        '400':
+        400:
           $ref: '#/components/responses/Response_400'
-        '404':
+        404:
           $ref: '#/components/responses/Response_404'
-        '502':
+        502:
           $ref: '#/components/responses/Response_502'
       operationId: vehiculos_get
       summary: Obtenemos el listado de todos los vehículos
@@ -65,13 +68,23 @@ paths:
       tags:
         - vehiculo
       responses:
-        '201':
-          $ref: '#/components/responses/Response_201'
-        '400':
+        201:
+          headers:
+            Location:
+              $ref: '#/components/headers'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTP_Problem'
+              examples:
+                response-http-201:
+                  $ref: '#/components/examples/response-http-201'
+          description: El recurso ha sido creado
+        400:
           $ref: '#/components/responses/Response_400'
-        '422':
+        422:
           $ref: '#/components/responses/Response_422'
-        '502':
+        502:
           $ref: '#/components/responses/Response_502'
       operationId: vehiculos_post
       summary: Creación de un registro de un vehículo
@@ -80,7 +93,7 @@ paths:
       tags:
         - vehiculo
       responses:
-        '204':
+        204:
           $ref: '#/components/responses/Response_204'
       operationId: operation_Vehiculo
       summary: Listado de métodos HTTP soportados
@@ -97,13 +110,13 @@ paths:
       tags:
         - vehiculo
       responses:
-        '200':
+        200:
           $ref: '#/components/responses/Response_200'
-        '400':
+        400:
           $ref: '#/components/responses/Response_400'
-        '404':
+        404:
           $ref: '#/components/responses/Response_404'
-        '412':
+        412:
           $ref: '#/components/responses/Response_412'
       operationId: vehiculos_put
       summary: Actualización de datos de vehículos según su VIN
@@ -120,9 +133,9 @@ paths:
       tags:
         - vehiculo
       responses:
-        '204':
+        204:
           $ref: '#/components/responses/Response_204'
-        '404':
+        404:
           $ref: '#/components/responses/Response_404'
       operationId: vehiculos_delete
       summary: Eliminación de vehículo según su identificador VIN.
@@ -149,13 +162,13 @@ paths:
         | *404*        |  NOT FOUND                 | No hay vehiculos     |
         | *502*        |  INTERNAL SERVER ERROR     | Error en el servidor |
       responses:
-        '200':
+        200:
           $ref: '#/components/responses/Response_200'
-        '400':
+        400:
           $ref: '#/components/responses/Response_400'
-        '404':
+        404:
           $ref: '#/components/responses/Response_404'
-        '502':
+        502:
           $ref: '#/components/responses/Response_502'
       parameters:
         - $ref: '#/components/parameters/VIN_Vehiculo'
@@ -190,18 +203,7 @@ components:
                     $ref: '#/components/schemas/Link'
                 readOnly: true
       description: '`OK`: el objeto ha sido modificado'
-    Response_201:
-      headers:
-        Location:
-          $ref: '#/components/schemas'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/HTTP_Problem'
-          examples:
-            response-http-201:
-              $ref: '#/components/examples/response-http-201'
-      description: El recurso ha sido creado
+
     Response_204:
       headers:
         Allow:
@@ -288,12 +290,12 @@ components:
         description: |-
           Ordenación de la respuesta por los siguientes parámetros:
           * VIN
-          * año
+          * anno
           * reparacionUltima
           * clienteID
         enum:
           - VIN
-          - año
+          - anno
           - reparacionUltima
           - clienteID
         type: string
@@ -385,9 +387,9 @@ components:
               modelo:
                 description: Modelo de vehículo
                 type: string
-              año:
+              anno:
                 format: int32
-                description: Año de fabricación del vehiculo
+                description: anno de fabricación del vehiculo
                 type: integer
               motor:
                 description: Cilindrada del motor, CV del motor, tipo de motor.
@@ -400,7 +402,7 @@ components:
               matricula: XEC4567YX
               marca: Ford
               modelo: Mustang
-              año: 1987
+              anno: 1987
               motor: V8, 500 CV, gasolina
               clienteID: qwer1234
               
@@ -413,7 +415,7 @@ components:
               - matricula
               - marca
               - modelo
-              - año
+              - anno
               - motor
               - clienteID
             type: object
@@ -427,9 +429,9 @@ components:
                 modelo:
                   description: Modelo de vehículo
                   type: string
-                año:
+                anno:
                   format: int32
-                  description: Año de fabricación del vehiculo
+                  description: anno de fabricación del vehiculo
                   type: integer
                 motor:
                   description: Cilindrada del motor, CV del motor, tipo de motor.
@@ -439,12 +441,12 @@ components:
                   type: string
           example:
             vehiculo:
-              matricula: XEC4567YX
-              marca: Bugatti
-              modelo: Chiron super sport
-              año: 2016
-              motor: V16, 1500 CV, gasolina
-              clienteID: qwer1234
+              matricula: "XEC4567YX"
+              marca: "Bugatti"
+              modelo: "Chiron super sport"
+              anno: 2016
+              motor: "V16, 1500 CV, gasolina"
+              clienteID: "qwer1234"
       required: true
       
   headers:

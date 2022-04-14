@@ -10,9 +10,9 @@ _EQUIPO 4:_
 ### _**Consideraciones de diseño tomadas**_
 - Se han añadido 4 métodos `GET` | `POST` | `DELETE` | `OPTION`. Se consideró que para la gestión de los vehículos de un taller eran necesarias.
 
-- Se han añadido dos métodos `GET` uno para recuperar el listado de todos los vehículos, ya sea ordenados por: VIN, año, reparacionUltima, clienteID. Además, también se puede ordenar por orden ascendente o descendente. Y otro método para buscar por VIN de vehículo, que es el único atributo que no se repite.
+- Se han añadido dos métodos `GET` uno para recuperar el listado de todos los vehículos, ya sea ordenados por: VIN, anno, reparacionUltima, clienteID. Además, también se puede ordenar por orden ascendente o descendente. Y otro método para buscar por VIN de vehículo, que es el único atributo que no se repite.
 
-- Se ha considerado que el método `POST` necesita como mínimo los siguientes valores: Matrícula, la marca, el modelo, el año de fabricación, el motor, el id del cliente propietario del vehículo.
+- Se ha considerado que el método `POST` necesita como mínimo los siguientes valores: Matrícula, la marca, el modelo, el anno de fabricación, el motor, el id del cliente propietario del vehículo.
 
 - Tras la implementación de los métodos `PUT` y `DELETE` (completan las operaciones CRUD), la especificación alcanza el Nivel 2 de madurez de Richardson. Para alcanzar _**the glory of REST**_, se implementa HATEOAS. Se introducen los _links_ para completar la información del vehículo. En este caso, hacen referencia al siguiente vehículo de la lista, y al anterior.
 
@@ -69,7 +69,7 @@ Realizar las peticiones deseadas desde la UI de Swagger. Podrás probar cualquie
 - marca (string)
 - modelo (string)
 - motor (cilindrada, CV, tipo de motor) (Text)
-- año (int)
+- anno (int)
 - reparación (fecha ultima reparación) (Text) 
 - clienteID (string)
 

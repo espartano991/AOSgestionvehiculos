@@ -12,17 +12,17 @@ services:
     backend:
         image: stoplight/prism:4
         container_name: vehiculosGestion_mock
-        command: mock --cors -h 0.0.0.0 "/AOSgestionvehiculos/OpenApi/openapi.yaml"
+        command: mock --cors -h 0.0.0.0 "/AOSgestionvehiculos/openapi.yaml"
         ports:
           - 4010:4010
         volumes:
-            - ./openapi:/practica1_AOS:ro
+            - ./openapi:/AOSgestionvehiculos:ro
     frontend:
         image: swaggerapi/swagger-ui
         container_name: vehiculosGestion_ui
         ports:
             - 8000:8080
         environment:
-            SWAGGER_JSON: /AOSgestionvehiculos/OpenApi/openapi.yaml
+            SWAGGER_JSON: /AOSgestionvehiculos/openapi.yaml
         volumes:
-            - ./OpenApi:/practica1_AOS:ro
+            - ./OpenApi:/AOSgestionvehiculos:ro

@@ -22,9 +22,9 @@ properties:
   modelo:
     description: Modelo de vehículo
     type: string
-  año:
+  anno:
     format: int32
-    description: Año de fabricación del vehiculo
+    description: anno de fabricación del vehiculo
     type: integer
   motor:
     description: Cilindrada del motor, CV del motor, tipo de motor.
@@ -35,7 +35,7 @@ properties:
   reparacionUltima:
     nullable: true
     format: int32
-    description: Año de la última reparación del vehículo
+    description: anno de la última reparación del vehículo
     type: integer
 example:
   vehiculo:
@@ -43,7 +43,7 @@ example:
     matricula: XEC4567YX
     marca: Ford
     modelo: Mustang
-    año: 1987
+    anno: 1987
     motor: V8, 500 CV, gasolina
     clienteID: qwer1234
     reparacionUltima: 2021
