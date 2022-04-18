@@ -16,7 +16,7 @@ _EQUIPO 4:_
 
 - Tras la implementación de los métodos `PUT` y `DELETE` (completan las operaciones CRUD), la especificación alcanza el Nivel 2 de madurez de Richardson. Para alcanzar _**the glory of REST**_, se implementa HATEOAS. Se introducen los _links_ para completar la información del vehículo. En este caso, hacen referencia al listado de todos los vehículos y a las posibles acciones que se pueden realizar con el vehículo
 
-- Se adjuntan pruebas de todos los métodos y _responses_ posibles en el archivo http-request.http.
+- Se adjuntan pruebas de todos los métodos y _responses_ posibles en el mismo archivo openapi.yaml.
   
 ### **_Instrucciones para desplegar el servicio desde 0🐳_**
 ###
