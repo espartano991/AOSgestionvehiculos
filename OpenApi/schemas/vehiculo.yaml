@@ -14,8 +14,8 @@ properties:
     description: Identificador único de cada vehículo
     type: string
     readOnly: true
-    pattern: '[A-Z0-9]{17}'
-    minLenght: 17
+    pattern: '[A-Z0-9]{7,17}'
+    minLenght: 7
     maxLenght: 17
   matricula:
     description: Matrícula del vehículo
