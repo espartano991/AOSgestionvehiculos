@@ -20,6 +20,9 @@ properties:
   matricula:
     description: Matrícula del vehículo
     type: string
+    pattern: '[A-Z0-9]{0,17}'
+    minLenght: 0
+    maxLenght: 17
   marca:
     description: Marca del vehículo (mercedes, porche, etc.)
     type: string
