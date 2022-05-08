@@ -169,6 +169,32 @@ paths:
           $ref: '#/components/responses/Response_502'
       parameters:
         - $ref: '#/components/parameters/VIN'
+        
+  /vehiculo/{matricula}:
+    get:
+      tags: 
+       - vehiculo
+      operationId: vehiculo_matricula_get
+      summary: Obtención de un vehículo por matricula
+      description: |-
+        Las posibles respuestas a esta operación son:
+        | Código error | Descripción                | Motivo               |
+        | -----------  | -------------------------  | -------------------- |
+        | *200*        |  OK                        | Hay vehiculos        |
+        | *400*        |  BAD REQUEST               | Sintaxis incorrecta  |
+        | *404*        |  NOT FOUND                 | No hay vehiculos     |
+        | *502*        |  INTERNAL SERVER ERROR     | Error en el servidor |
+      responses:
+        200:
+          $ref: '#/components/responses/Response_200'
+        400:
+          $ref: '#/components/responses/Response_400'
+        404:
+          $ref: '#/components/responses/Response_404'
+        502:
+          $ref: '#/components/responses/Response_502'
+      parameters:
+        - $ref: '#/components/parameters/matricula'
 components:
   schemas:
     Link:
@@ -275,6 +301,13 @@ components:
     VIN:
       name: VIN
       description: Identificador de vehículo
+      schema:
+        type: string
+      in: path
+      required: true
+    matricula:
+      name: matricula
+      description: Matrícula del vehículo
       schema:
         type: string
       in: path
