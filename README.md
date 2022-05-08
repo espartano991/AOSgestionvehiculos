@@ -10,7 +10,7 @@ _EQUIPO 4:_
 ### _**Consideraciones de diseño tomadas**_
 - Se han añadido 4 métodos `GET` | `POST` | `DELETE` | `OPTION`. Se consideró que para la gestión de los vehículos de un taller eran necesarias.
 
-- Se han añadido dos métodos `GET` uno para recuperar el listado de todos los vehículos, ya sea ordenados por: VIN, anno, reparacionUltima, clienteID. Además, también se puede ordenar por orden ascendente o descendente. Y otro método para buscar por VIN de vehículo, que es el único atributo que no se repite.
+- Se han añadido dos métodos `GET` uno para recuperar el listado de todos los vehículos, ya sea ordenados por: VIN, anno, reparacionUltima, clienteID. Además, también se puede ordenar por orden ascendente o descendente. Y otro método para buscar por VIN de vehículo, que es el único atributo que no se repite. Por último, se ha añadido otro método para poder buscar por la matrícula del vehículo.
 
 - Se ha considerado que el método `POST` necesita como mínimo los siguientes valores: Matrícula, la marca, el modelo, el anno de fabricación, el motor, el id del cliente propietario del vehículo.
 
